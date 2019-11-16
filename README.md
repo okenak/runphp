@@ -1,6 +1,9 @@
 # runphp
  It is a tool that can easily test the operation of php with docker
 
+# required
+https://docs.docker.com/docker-for-mac/install/
+
 # How to install
 Clone repository from github
 ```
