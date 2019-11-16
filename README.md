@@ -13,6 +13,10 @@ Add path to environment variable
 ```
 $ echo 'export PATH="$HOME/.runphp/bin:$PATH"' >> ~/.bash_profile
 ```
+Reload bash_profile
+```
+$ source ~/.bash_profile
+```
 
 # Usage
 ```
