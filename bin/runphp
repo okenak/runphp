@@ -1,0 +1,45 @@
+#!/bin/bash
+
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+source $SCRIPT_DIR/../config
+
+ARGS=${@:2:($#-1)}
+
+function version {
+    echo "$(basename ${0}) version 0.0.1 "
+}
+
+function usage {
+    cat <<EOF
+$(basename ${0}) is a tool for ...
+
+Usage:
+    $(basename ${0}) [option] [<command>]
+
+Options:
+    version    print $(basename ${0}) version
+    cli        run php-script         (example: run-php cli main.php)
+    composer   run composer           (example: run-php composer install)
+    server     run build in webserver (example: runphp server)
+EOF
+}
+
+case "$1" in
+  "cli")
+    docker run -it --rm -v $PWD:/usr/src/myapp -w /usr/src/myapp php:$PHP_VERSION-cli php ${ARGS:--v}
+    ;;
+  "composer")
+    docker run -it --rm -v $PWD:/app composer:$COMPOSER_VERSION $ARGS
+    ;;
+  "server")
+    docker run -it --rm -v $PWD:/usr/src/myapp -w /usr/src/myapp -p $SERVER_PORT:$SERVER_PORT php:$PHP_VERSION-cli php -S 0.0.0.0:$SERVER_PORT
+    ;;
+  "version")
+    version
+    ;;
+  *)
+    usage
+    exit 1
+    ;;
+esac
+
